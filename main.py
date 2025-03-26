@@ -8,9 +8,9 @@ import random
 import os
 
 # === Configuración ===
-plantilla_path = "Archivo de prueba post para Niyi.xlsx"
+plantilla_path = "Archivo de prueba carrusel para Niyi.xlsx"
 fecha_actual = datetime.today().strftime("%d/%m/%Y")
-post_por_campaña = 5
+carrusel_por_campaña = 5
 carpeta_destino = "excel_campañas"
 
 # Crear carpeta si no existe
@@ -50,7 +50,7 @@ for row in rows:
     post_generados = 0
 
     for fila_objetivo in filas_vacias:
-        if post_generados >= post_por_campaña:
+        if post_generados >= carrusel_por_campaña:
             break
 
         opciones_servicios = []
@@ -71,47 +71,47 @@ for row in rows:
         if campaign_key == "osceola_fence_company":
             theme = gpt.theme_osceola()
             data = {
-                "Text": gpt.copy_osceola(theme, 100),
+                "Text": gpt.copy_osceola(theme, 90),
                 "Date": fecha_actual,
                 "Document title": gpt.document_title_osceola(theme),
-                "First Comment Text": gpt.firts_comment_osceola(theme, 50),
+                "First Comment Text": gpt.firts_comment_osceola(theme, 30),
             }
 
         elif campaign_key == "quick_cleaning":
             theme = gpt.theme_quick_cleaning()
             data = {
-                "Text": gpt.copy_quick_cleaning(theme, 100),
+                "Text": gpt.copy_quick_cleaning(theme, 90),
                 "Date": fecha_actual,
                 "Document title": gpt.document_title_quick_cleaning(theme),
-                "First Comment Text": gpt.firts_comment_quick_cleaning(theme, 50),
+                "First Comment Text": gpt.firts_comment_quick_cleaning(theme, 30),
 
             }
 
         elif campaign_key == "elite_chicago_spa":
             theme = gpt.theme_elite_spa()
             data = {
-                "Text": gpt.copy_elite_spa(theme, 100),
+                "Text": gpt.copy_elite_spa(theme, 90),
                 "Date": fecha_actual,
                 "Document title": gpt.document_title_elite_spa(theme),
-                "First Comment Text": gpt.firts_comment_elite_spa(theme, 50),
+                "First Comment Text": gpt.firts_comment_elite_spa(theme, 30),
             }
 
         elif campaign_key == "lopez_&_lopez_abogados":
             theme = gpt.theme_lopez_abogados()
             data = {
-                "Text": gpt.copy_lopez_abogados(theme, 100),
+                "Text": gpt.copy_lopez_abogados(theme, 90),
                 "Date": fecha_actual,
                 "Document title": gpt.document_title_lopez_abogados(theme),
-                "First Comment Text": gpt.firts_comment_lopez_abogados(theme, 50),
+                "First Comment Text": gpt.firts_comment_lopez_abogados(theme, 30),
             }
 
         elif campaign_key.startswith("botanica"):
             theme = gpt.theme_botanica()
             data = {
-                "Text": gpt.copy_botanica(theme, 100),
+                "Text": gpt.copy_botanica(theme, 90),
                 "Date": fecha_actual,
                 "Document title": gpt.document_title_botanica(theme),
-                "First Comment Text": gpt.firts_comment_botanica(theme, 50),    
+                "First Comment Text": gpt.firts_comment_botanica(theme, 30),    
             }
 
         else:

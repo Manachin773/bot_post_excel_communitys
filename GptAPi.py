@@ -41,7 +41,7 @@ class GPT:
         assistant_message = self.create_message("assistant", self.ASSISTANT_MESSAGE)
         user_message = self.create_message(
             "user",
-            f"Create compelling copy for {theme}. The copy should be compelling for the company's social media, focusing on the key benefits of the service, with a clear call to action, and two strategic emojis at the end. Also, create eight viral and engaging hashtags with the information in the text. The text should be {characters} long.",
+            f"Create compelling text for {theme}. The text should be compelling for the company's social media channels, focusing on the service's benefits and inviting people to take advantage of the service with two strategic emojis at the end. Also, create eight viral and engaging hashtags with the information in the text. The text should be {characters} long.",
         )
         return self.generate_response(
             "gpt-3.5-turbo", [system_message, assistant_message, user_message]
@@ -89,7 +89,7 @@ class GPT:
         assistant_message = self.create_message("assistant", self.ASSISTANT_MESSAGE)
         user_message = self.create_message(
             "user",
-            f"Create compelling copy for {theme}. The copy should be compelling for the company's social media, focusing on the key benefits of the service, with a clear call to action, and two strategic emojis at the end. Also, create eight viral and engaging hashtags with the information in the text. The text should be {characters} long.",
+            f"Create compelling text for {theme}. The text should be compelling for the company's social media channels, focusing on the service's benefits and inviting people to take advantage of the service with two strategic emojis at the end. Also, create eight viral and engaging hashtags with the information in the text. The text should be {characters} long.",
         )
         return self.generate_response(
             "gpt-3.5-turbo", [system_message, assistant_message, user_message]
@@ -164,7 +164,7 @@ class GPT:
         ).replace('"', "")
         
         
-    def firts_comment_elite_spa(self, theme, characters=90):        
+    def firts_comment_elite_spa(self, theme, characters=30):        
         system_message = self.create_message("system", self.SYSTEM_MESSAGE)
         assistant_message = self.create_message("assistant", self.ASSISTANT_MESSAGE)
         user_message = self.create_message(
@@ -259,12 +259,12 @@ class GPT:
         return self.generate_response("gpt-3.5-turbo", [system_message, assistant_message, user_message]).replace('"', "")
 
 
-    def firts_comment_botanica(self, theme, characters=40):
+    def firts_comment_botanica(self, theme, characters=30):
         system_message = self.create_message("system", self.SYSTEM_MESSAGE)
         assistant_message = self.create_message("assistant", self.ASSISTANT_MESSAGE)
         user_message = self.create_message(
             "user",
-            f"Genera un comentario breve y auténtico sobre {theme}, diseñado para incentivar la interacción en redes sociales. El comentario debe sonar natural y cercano, evitando frases repetitivas o genéricas. Debe reflejar el tono espiritual y místico del negocio, alentando a los seguidores a dejar sus inquietudes, compartir sus experiencias o etiquetar a un amigo. No debe parecer spam, sino un mensaje atractivo que motive la conversación (sin hashtags). Usa solo un emoji si es necesario y asegúrate de que el comentario tenga {characters} caracteres.",
+            f"Genera un comentario breve y auténtico sobre {theme}, diseñado para incentivar la interacción en redes sociales. El comentario debe sonar natural y cercano, evitando frases repetitivas o genéricas. Debe reflejar el tono espiritual y místico del negocio, invitando a los seguidores a dejar sus inquietudes, compartir sus experiencias o etiquetar a un amigo. No debe parecer spam, sino un mensaje atractivo que motive la conversación (sin hashtags). Usa solo un emoji si es necesario y asegúrate de que el comentario tenga {characters} caracteres.",
         )
         return self.generate_response("gpt-3.5-turbo", [system_message, assistant_message, user_message]).replace('"', "")
 
