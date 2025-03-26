@@ -8,9 +8,9 @@ import random
 import os
 
 # === Configuración ===
-plantilla_path = "Archivo de prueba reels para Niyi.xlsx"
+plantilla_path = "Archivo de prueba post para Niyi.xlsx"
 fecha_actual = datetime.today().strftime("%d/%m/%Y")
-reels_por_campaña = 30
+post_por_campaña = 5
 carpeta_destino = "excel_campañas"
 
 # Crear carpeta si no existe
@@ -22,14 +22,14 @@ with SessionLocal() as session:
     result = session.execute(text("SELECT campaign, commercial_services, residential_services, language FROM campaign"))
     rows = result.fetchall()
 
-# === Generar Excel y Reels por campaña ===
+# === Generar Excel y Post por campaña ===
 for row in rows:
     campaign_name, commercial_services, residential_services, lang = row
     campaign_key = campaign_name.lower().replace(" ", "_")
     print(f"\n📢 Procesando campaña: {campaign_name} [{campaign_key}]")
 
     # Crear copia nueva del Excel plantilla en la carpeta destino
-    nuevo_excel = os.path.join(carpeta_destino, f"Reels_{campaign_key}.xlsx")
+    nuevo_excel = os.path.join(carpeta_destino, f"Post_{campaign_key}.xlsx")
     shutil.copy(plantilla_path, nuevo_excel)
     wb = load_workbook(nuevo_excel)
     ws = wb.active
@@ -39,10 +39,7 @@ for row in rows:
     idx_text = headers.index("Text") + 1
     idx_date = headers.index("Date") + 1
     idx_title = headers.index("Document title") + 1
-    idx_yt_title = headers.index("Youtube Video Title") + 1
-    idx_yt_tags = headers.index("Youtube Video Tags") + 1
     idx_comment = headers.index("First Comment Text") + 1
-    idx_tiktok = headers.index("TikTok Title") + 1
 
     # Detectar filas vacías
     filas_vacias = []
@@ -50,10 +47,10 @@ for row in rows:
         if ws.cell(row=fila, column=idx_text).value in (None, ""):
             filas_vacias.append(fila)
 
-    reels_generados = 0
+    post_generados = 0
 
     for fila_objetivo in filas_vacias:
-        if reels_generados >= reels_por_campaña:
+        if post_generados >= post_por_campaña:
             break
 
         opciones_servicios = []
@@ -77,10 +74,7 @@ for row in rows:
                 "Text": gpt.copy_osceola(theme, 100),
                 "Date": fecha_actual,
                 "Document title": gpt.document_title_osceola(theme),
-                "Youtube Video Title": gpt.youtube_video_title_osceola(theme, 40),
-                "Youtube Video Tags": gpt.youtube_video_tags_osceola(theme),
                 "First Comment Text": gpt.firts_comment_osceola(theme, 50),
-                "TikTok Title": gpt.tikTok_title_osceola(theme, 50)
             }
 
         elif campaign_key == "quick_cleaning":
@@ -89,10 +83,8 @@ for row in rows:
                 "Text": gpt.copy_quick_cleaning(theme, 100),
                 "Date": fecha_actual,
                 "Document title": gpt.document_title_quick_cleaning(theme),
-                "Youtube Video Title": gpt.youtube_video_title_quick_cleaning(theme),
-                "Youtube Video Tags": gpt.youtube_video_tags_quick_cleaning(theme),
                 "First Comment Text": gpt.firts_comment_quick_cleaning(theme, 50),
-                "TikTok Title": gpt.tikTok_title_quick_cleaning(theme, 50)
+
             }
 
         elif campaign_key == "elite_chicago_spa":
@@ -101,10 +93,7 @@ for row in rows:
                 "Text": gpt.copy_elite_spa(theme, 100),
                 "Date": fecha_actual,
                 "Document title": gpt.document_title_elite_spa(theme),
-                "Youtube Video Title": gpt.youtube_video_title_elite_spa(theme),
-                "Youtube Video Tags": gpt.youtube_video_tags_elite_spa(theme),
                 "First Comment Text": gpt.firts_comment_elite_spa(theme, 50),
-                "TikTok Title": gpt.tikTok_title_elite_spa(theme, 50)
             }
 
         elif campaign_key == "lopez_&_lopez_abogados":
@@ -113,10 +102,7 @@ for row in rows:
                 "Text": gpt.copy_lopez_abogados(theme, 100),
                 "Date": fecha_actual,
                 "Document title": gpt.document_title_lopez_abogados(theme),
-                "Youtube Video Title": gpt.youtube_video_title_lopez_abogados(theme),
-                "Youtube Video Tags": gpt.youtube_video_tags_lopez_abogados(theme),
                 "First Comment Text": gpt.firts_comment_lopez_abogados(theme, 50),
-                "TikTok Title": gpt.tikTok_title_lopez_abogados(theme, 50)
             }
 
         elif campaign_key.startswith("botanica"):
@@ -125,10 +111,7 @@ for row in rows:
                 "Text": gpt.copy_botanica(theme, 100),
                 "Date": fecha_actual,
                 "Document title": gpt.document_title_botanica(theme),
-                "Youtube Video Title": gpt.youtube_video_title_botanica(theme, 50),
-                "Youtube Video Tags": gpt.youtube_video_tags_botanica(theme),
-                "First Comment Text": gpt.firts_comment_botanica(theme, 50),
-                "TikTok Title": gpt.tikTok_title_botanica(theme, 50)
+                "First Comment Text": gpt.firts_comment_botanica(theme, 50),    
             }
 
         else:
@@ -139,15 +122,13 @@ for row in rows:
         ws.cell(row=fila_objetivo, column=idx_text).value = data["Text"]
         ws.cell(row=fila_objetivo, column=idx_date).value = data["Date"]
         ws.cell(row=fila_objetivo, column=idx_title).value = data["Document title"]
-        ws.cell(row=fila_objetivo, column=idx_yt_title).value = data["Youtube Video Title"]
-        ws.cell(row=fila_objetivo, column=idx_yt_tags).value = data["Youtube Video Tags"]
         ws.cell(row=fila_objetivo, column=idx_comment).value = data["First Comment Text"]
-        ws.cell(row=fila_objetivo, column=idx_tiktok).value = data["TikTok Title"]
+ 
 
-        reels_generados += 1
+        post_generados += 1
 
     # === Limpiar celdas vacías extras (Metricool friendly) ===
-    max_fila_valida = max(filas_vacias[:reels_generados]) if reels_generados else 1
+    max_fila_valida = max(filas_vacias[:post_generados]) if post_generados else 1
     for fila in range(max_fila_valida + 1, ws.max_row + 1):
         for col in range(1, ws.max_column + 1):
             ws.cell(row=fila, column=col).value = None
